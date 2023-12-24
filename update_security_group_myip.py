@@ -1,4 +1,5 @@
 import subprocess
+import datetime
 import boto3
 import argparse
 import os
@@ -55,9 +56,9 @@ def update_security_group_rule(security_group_id):
             ToPort=22,
             CidrIp=cidr_ip
         )
-        print(f"Successfully updated rule in {security_group_id} allowing SSH access from {cidr_ip}")
+        print(f"{datetime.datetime.now()} - Successfully updated rule in {security_group_id} allowing SSH access from {cidr_ip}")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"{datetime.datetime.now()} - An error occurred: {e}")
 
 def main():
     """
@@ -78,8 +79,6 @@ def main():
     parser.add_argument('--aws_profile', type=str, required=True, help='AWS profile to use')
     parser.add_argument('--security_group_id', type=str, required=True, help='Security Group ID to be updated')
     args = parser.parse_args()
-
-    # Set the AWS_PROFILE environment variable
     os.environ['AWS_PROFILE'] = args.aws_profile
 
     # Update the security group rule
