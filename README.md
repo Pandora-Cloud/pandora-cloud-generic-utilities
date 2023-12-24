@@ -20,6 +20,29 @@ The `aws_security_group_ssh_access_updater.py` script is a Python utility design
 - AWS CLI configured with the necessary AWS credentials and permissions.
 - `boto3` (AWS SDK for Python).
 
+#### Required AWS IAM Permissions
+
+The following AWS IAM policy creates the appropriate permission for the script to function correctly:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeSecurityGroups",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:RevokeSecurityGroupIngress"
+            ],
+            "Resource": [
+                "arn:aws:ec2:region:account-id:security-group/security-group-id",
+            ]
+        }
+    ]
+}
+```
+
 #### Usage
 
 Run the script with the security group ID as an argument. Optionally, set the `AWS_PROFILE` environment variable to use a specific AWS profile:
